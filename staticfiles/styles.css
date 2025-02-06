@@ -199,7 +199,6 @@ nav button {
     padding: 0px;
 }
 
-
 /* responsive styles when width is less than 1400px */
 @media screen and (max-width: 560px) {
     header h1 {
