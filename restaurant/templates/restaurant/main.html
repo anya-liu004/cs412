@@ -1,0 +1,24 @@
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Welcome to Sugar & Whisk</h1>
+    <p>Experience the best baked goods in town.</p>
+    
+    <h2>Location</h2>
+    <p>123 Sweets Rd, Candy City, USA</p>
+    
+    <h2>Hours of Operation</h2>
+    <table>
+        <tr><th>Day</th><th>Hours</th></tr>
+        <tr><td>Monday - Friday</td><td>7:00 AM - 7:00 PM</td></tr>
+        <tr><td>Saturday - Sunday</td><td>8:00 AM - 7:00 PM</td></tr>
+    </table>
+    
+    <h2>Gallery</h2>
+    <div class="gallery">
+        <img src="/static/images/restaurant1.jpg" alt="Restaurant Interior" width="300">
+        <img src="/static/images/restaurant2.jpg" alt="Signature Dish" width="300">
+    </div>
+</div>
+{% endblock %}

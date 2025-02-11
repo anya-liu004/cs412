@@ -1,0 +1,40 @@
+{% extends 'restaurant/base.html' %}
+
+
+{% block content %}
+<div>
+<h1>Order Form</h1>
+
+<form action="{% url 'confirmation' %}" method="POST">
+    {% csrf_token %}
+    Name: <input type="text" name="name"><br>
+    Phone: <input type="tel" name="phone"><br>
+    Email: <input type="email" name="email"><br>
+
+    <h2>Menu Items</h2>
+    <input type="checkbox" id="item1" name="items" value="Cookies">
+    <label for="item1">Cookies - $2.00</label><br>
+    <input type="checkbox" id="item2" name="items" value="Brownie">
+    <label for="item2">Brownie - $3.00</label><br>
+    <input type="checkbox" id="item3" name="items" value="Muffin">
+    <label for="item3">Muffin - $4.00</label><br>
+    <input type="checkbox" id="item4" name="items" value="daily_special">
+    <label for="item4">Today's Special: {{ special }} - ${{ special_price|floatformat:2 }}</label><br>
+    
+    <h2>Extras</h2>
+        <label for="toasted?">Would you like your items toasted?</label>
+        <select id="toasted?" name="toasted?">
+            <option value="none">None</option>
+            <option value="toasted">Toasted</option>
+            <option value="double_toasted">Double Toasted</option>
+        </select><br>
+        
+        <label for="instructions">Special Instructions:</label><br>
+        <textarea id="instructions" name="instructions" rows="4" cols="50"></textarea><br>
+        <input type="submit" value="Place Order">
+    </form>
+</div>
+
+{% endblock %}
+
+
