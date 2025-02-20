@@ -20,7 +20,10 @@
         <tr>
             <td>
                 {% if p.image_url %}
+                <a href="{% url 'show_profile' p.pk %}">
                     <img src="{{ p.image_url }}" alt="Profile Image" width="250" height="250">
+                    <!-- <img src="{{ p.image_url }}" alt="Profile Image"> -->
+                </a>
                 {% else %}
                     No Image
                 {% endif %}

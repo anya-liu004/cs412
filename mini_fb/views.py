@@ -15,11 +15,11 @@ class ShowAllProfilesView(ListView):
     template_name = 'mini_fb/show_all_profiles.html'
     context_object_name = 'profiles' # how to find the data in the template file
 
-class ArticleView(DetailView):
-    '''Show the details for one article.'''
+class ShowProfilePageView(DetailView):
+    '''Show the details for one profile.'''
     model = Profile
-    template_name = 'blog/article.html' 
-    context_object_name = 'article'
+    template_name = 'mini_fb/show_profile.html'
+    context_object_name = 'profile'
 
 class RandomArticleView(DetailView):
     '''Show the details for one article.'''
@@ -33,5 +33,3 @@ class RandomArticleView(DetailView):
 
         all_articles = Article.objects.all()
         return random.choice(all_articles)
-
-# Create your views here.

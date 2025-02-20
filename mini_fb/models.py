@@ -14,12 +14,6 @@ class Profile(models.Model):
     city = models.TextField(blank=False)
     email_address = models.TextField(blank=False)
     image_url = models.URLField(blank=True) ## new
-
-    # title = models.TextField(blank=False)
-    # author = models.TextField(blank=False)
-    # text = models.TextField(blank=False)
-    # published = models.DateTimeField(auto_now=True)
-    # image_url = models.URLField(blank=True) ## new
     
     def __str__(self):
         '''Return a string representation of this Profile object.'''

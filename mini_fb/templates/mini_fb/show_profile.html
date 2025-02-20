@@ -1,0 +1,22 @@
+<!-- Author: Anya Liu -->
+<!-- Email: anyaliu@bu.edu -->
+<!-- This is the template that inherits from base.html to display a single profile in more detail -->
+{% extends 'mini_fb/base.html' %}
+
+<h1>{{profile.first_name}} </h1>
+
+{% block content %}
+<main class="grid-container">
+    
+    <article class="featured">
+        <h2>{{ profile.first_name }} {{ profile.last_name }}</h2>
+        {% if profile.image_url %}
+		<img src="{{profile.image_url}}" alt="{{profile.image_url}}">
+		{% endif %}
+        
+        <p>City: {{ profile.city }}</p>
+        <p>Email: {{ profile.email_address }}</p>
+    </article>
+
+</main>
+{% endblock %}
