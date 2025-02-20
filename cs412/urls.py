@@ -24,4 +24,5 @@ urlpatterns = [
     path('hw/', include('hw.urls')),                    # Class Example
     path('quotes/', include('quotes.urls')),            # Assignment 3
     path('restaurant/', include('restaurant.urls')),    # Assignment 4
+    path('blog/', include('blog.urls')),                # Class Example
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
