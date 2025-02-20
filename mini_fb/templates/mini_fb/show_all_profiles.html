@@ -1,0 +1,35 @@
+<!-- Author: Anya Liu -->
+<!-- Email: anyaliu@bu.edu -->
+<!-- This is the template that inherits from base.html to display all profiles -->
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<h1>Showing All Profiles</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Profile Image</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>City</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in profiles %}
+        <tr>
+            <td>
+                {% if p.image_url %}
+                    <img src="{{ p.image_url }}" alt="Profile Image" width="250" height="250">
+                {% else %}
+                    No Image
+                {% endif %}
+            </td>
+            <td>{{ p.first_name }}</td>
+            <td>{{ p.last_name }}</td>
+            <td>{{ p.city }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
