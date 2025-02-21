@@ -5,7 +5,6 @@
 from django.shortcuts import render
 from .models import Profile
 from django.views.generic import ListView, DetailView
-import random
 
 # Views for the mini_fb app
 class ShowAllProfilesView(ListView):
@@ -20,16 +19,3 @@ class ShowProfilePageView(DetailView):
     model = Profile
     template_name = 'mini_fb/show_profile.html'
     context_object_name = 'profile'
-
-class RandomArticleView(DetailView):
-    '''Show the details for one article.'''
-    model = Profile
-    template_name = 'blog/article.html'
-    context_object_name = 'article'
-
-    # pick one article at random:
-    def get_object(self):
-        '''Return one Article object chosen at random.'''
-
-        all_articles = Article.objects.all()
-        return random.choice(all_articles)

@@ -8,7 +8,7 @@
 {% block content %}
 <main class="grid-container">
     
-    <article class="featured">
+    <profile class="featured">
         <h2>{{ profile.first_name }} {{ profile.last_name }}</h2>
         {% if profile.image_url %}
 		<img src="{{profile.image_url}}" alt="{{profile.image_url}}">
@@ -16,7 +16,7 @@
         
         <p>City: {{ profile.city }}</p>
         <p>Email: {{ profile.email_address }}</p>
-    </article>
+    </profile>
 
 </main>
 {% endblock %}
