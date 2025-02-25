@@ -20,5 +20,27 @@
         </div>
     </article>
 
+    
+    <div>
+        <h2>Comments</h2>
+
+        <h3>
+            <a href="{% url 'create_comment' article.pk %}">Create a comment</a>
+        </h3>
+    
+        <!-- Display comments about this article -->
+        <!-- {{article.get_all_comments}} -->
+        {% for comment in article.get_all_comments %}
+        <article>
+            <div>
+            <strong>By {{comment.author}} at {{comment.published}}</strong>
+            <p>
+            {{comment.text}}
+            </div>
+        </article>
+        {% endfor %}
+
+    </div>
+
 </main>
 {% endblock %}
