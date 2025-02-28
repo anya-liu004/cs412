@@ -22,7 +22,7 @@ class Profile(models.Model):
     
     def get_absolute_url(self):
         '''Return the URL to display one instance of this model.'''
-        return reverse('profile', kwargs={'pk':self.pk})
+        return reverse('show_profile', kwargs={'pk': self.pk})
     
     def get_status_messages(self):
         '''Return all of the status messages about this profile.'''
