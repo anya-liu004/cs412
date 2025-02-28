@@ -1,3 +1,7 @@
+# Author: Anya Liu
+# Email: anyaliu@bu.edu
+# This is the forms.py file for the mini facebook app and defines the forms for the mini_fb app.
+
 from django import forms
 from .models import Profile, StatusMessage
 
@@ -9,19 +13,9 @@ class CreateProfileForm(forms.ModelForm):
         model = Profile
         fields = ['first_name', 'last_name', 'city', 'email_address', 'image_url']
 
-# class CreateArticleForm(forms.ModelForm):
-#     '''A form to add an Article to the database.'''
-
-#     class Meta:
-#         '''associate this form with a model from our database.'''
-#         model = Article
-#         fields = ['author', 'title', 'text', 'image_url']
-
-# class CreateCommentForm(forms.ModelForm):
-#     '''A form to add a Comment to the database.'''
-
-#     class Meta:
-#         '''associate this form with the Comment model; select fields.'''
-#         model = Comment
-#         # fields = ['article', 'author', 'text', ]  # which fields from model should we use
-#         fields = ['author', 'text', ]  # which fields from model should we use
+class CreateStatusMessageForm(forms.ModelForm):
+    '''A form to add a StatusMessage to the database.'''
+    class Meta:
+        '''associate this form with the StatusMessage model; select fields.'''
+        model = StatusMessage
+        fields = ['message' ]  # which fields from model should we use

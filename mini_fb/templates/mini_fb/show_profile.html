@@ -20,6 +20,9 @@
 
     <div>
         <h2>Status Messages</h2>
+        <h3>
+            <a href="{% url 'create_status' profile.pk %}">Create a Status Message</a>
+        </h3>
     
         <!-- Display status messages about this article -->
         {% for message in profile.get_status_messages %}
