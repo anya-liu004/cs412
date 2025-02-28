@@ -18,5 +18,21 @@
         <p>Email: {{ profile.email_address }}</p>
     </profile>
 
+    <div>
+        <h2>Status Messages</h2>
+    
+        <!-- Display status messages about this article -->
+        {% for message in profile.get_status_messages %}
+        <article>
+            <div>
+            <strong>{{message.timestamp}}</strong>
+            <p>
+            {{message.message}}
+            </div>
+        </article>
+        {% endfor %}
+
+    </div>
+
 </main>
 {% endblock %}
