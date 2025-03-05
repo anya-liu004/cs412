@@ -3,10 +3,10 @@
 # This is the views.py file for the mini facebook app and defines the views for the mini_fb app.
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from .models import Profile, Image, StatusImage
-from .forms import CreateProfileForm, CreateStatusMessageForm
+from .forms import CreateProfileForm, CreateStatusMessageForm, UpdateProfileForm
 
 ### Profile
 class ShowAllProfilesView(ListView):
@@ -30,8 +30,23 @@ class CreateProfileView(CreateView):
     form_class = CreateProfileForm
     template_name = "mini_fb/create_profile_form.html"
 
-### Status Message
+# Update Profile VIEW
+class UpdateProfileView(UpdateView):
+    '''A view to update an Article and save it to the database.'''
 
+    model = Profile
+    form_class = UpdateProfileForm
+    template_name = "mini_fb/update_profile_form.html"
+    
+    def form_valid(self, form):
+        '''
+        Handle the form submission to create a new Profile object.
+        '''
+        print(f'UpdateProfileView: form.cleaned_data={form.cleaned_data}')
+
+        return super().form_valid(form)
+
+### Status Message
 class CreateStatusMessageView(CreateView):
     '''A view to create a new status message and save it to the database.'''
     form_class = CreateStatusMessageForm

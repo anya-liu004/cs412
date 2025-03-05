@@ -1,0 +1,22 @@
+<!-- blog/templates/blog/update_profile_form.html -->
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<h2>Update a Profile</h2>
+
+<form action="{% url 'update_profile' profile.pk %}"  method ="POST" 
+    enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <table>
+    {{form.as_table}}
+    </table>
+
+    <input type='submit' name = 'update_profile' value= 'Update Profile!'>
+</form>
+<!-- Add Cancel Button -->
+<form action="{% url 'show_profile' profile.pk %}" method="GET">
+    <input type='submit' name = 'cancel' value= 'Cancel'>
+</form>
+
+{% endblock %}

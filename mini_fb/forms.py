@@ -19,3 +19,11 @@ class CreateStatusMessageForm(forms.ModelForm):
         '''associate this form with the StatusMessage model; select fields.'''
         model = StatusMessage
         fields = ['message' ]  # which fields from model should we use
+
+class UpdateProfileForm(forms.ModelForm):
+    '''A form to update a Profile in the database.'''
+
+    class Meta:
+        '''associate this form with the Article model.'''
+        model = Profile
+        fields = ['city', 'email_address', 'image_url']  # which fields from model should update

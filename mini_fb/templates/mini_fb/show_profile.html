@@ -16,6 +16,9 @@
         
         <p>City: {{ profile.city }}</p>
         <p>Email: {{ profile.email_address }}</p>
+        <h3>
+            <a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
+        </h3>
     </profile>
 
     <div>
@@ -33,7 +36,7 @@
                 {{status.message}}
                 </p>
                 {% for status_image in status.get_images %}
-                <img src='{{status_image.image.image_file.url}}' alt='Image'>
+                <img src='{{status_image.image.image_file.url}}' alt='Image' width="150" height=auto>
                 {% endfor %}
             </div>
         </article>
