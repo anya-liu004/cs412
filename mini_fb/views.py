@@ -5,8 +5,8 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse
-from .models import Profile, Image, StatusImage
-from .forms import CreateProfileForm, CreateStatusMessageForm, UpdateProfileForm
+from .models import Profile, StatusMessage, Image, StatusImage
+from .forms import CreateProfileForm, CreateStatusMessageForm, UpdateProfileForm, UpdateStatusMessageForm
 
 ### Profile
 class ShowAllProfilesView(ListView):
@@ -30,7 +30,7 @@ class CreateProfileView(CreateView):
     form_class = CreateProfileForm
     template_name = "mini_fb/create_profile_form.html"
 
-# Update Profile VIEW
+# Update Profile 
 class UpdateProfileView(UpdateView):
     '''A view to update an Article and save it to the database.'''
 
@@ -108,3 +108,55 @@ class CreateStatusMessageView(CreateView):
         pk = self.kwargs['pk']
         # call reverse to generate the URL for this Article
         return reverse('show_profile', kwargs={'pk':pk})
+
+# Update Status Message 
+class UpdateStatusMessageView(UpdateView):
+    '''A view to update a Status message and save it to the database.'''
+
+    model = StatusMessage
+    form_class = UpdateStatusMessageForm
+    template_name = "mini_fb/update_status_form.html"
+    context_object_name = 'status_message'
+    
+    def form_valid(self, form):
+        '''
+        Handle the form submission to create a new StatusMessage object.
+        '''
+        print(f'UpdateStatusMessageView: form.cleaned_data={form.cleaned_data}')
+
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        '''Return a the URL to which we should be directed after the update.'''
+
+        # get the pk for this status message
+        pk = self.kwargs.get('pk')
+        status_message = StatusMessage.objects.get(pk=pk)
+        
+        # find the profile to which this StatusMessage is related by FK
+        profile = status_message.profile
+        
+        # reverse to show the profile page
+        return reverse('show_profile', kwargs={'pk':profile.pk})
+    
+# Delete Status Message
+class DeleteStatusMessageView(DeleteView):
+    '''A view to delete a status message and remove it from the database.'''
+
+    template_name = "mini_fb/delete_status_form.html"
+    model = StatusMessage
+    context_object_name = 'status_message'
+
+    def get_success_url(self):
+        '''Return a the URL to which we should be directed after the delete.'''
+
+        # get the pk for this status message
+        pk = self.kwargs.get('pk')
+        status_message = StatusMessage.objects.get(pk=pk)
+        
+        # find the profile to which this StatusMessage is related by FK
+        profile = status_message.profile
+        
+        # reverse to show the profile page
+        return reverse('show_profile', kwargs={'pk':profile.pk})
+

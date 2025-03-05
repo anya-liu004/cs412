@@ -1,20 +1,19 @@
 <!-- Author: Anya Liu -->
 <!-- Email: anyaliu@bu.edu -->
-<!-- This is the template to display the HTML form to update a Profile object.-->
+<!-- This is the template to display the HTML form to update a Status Message object.-->
 {% extends 'mini_fb/base.html' %}
 
 {% block content %}
-<h2>Update a Profile</h2>
+<h3>Update a Status Message</h3>
 
-<form action="{% url 'update_profile' profile.pk %}"  method ="POST" 
-    enctype="multipart/form-data">
+<form action="{% url 'update_status' status_message.pk %}"  method ="POST">
     {% csrf_token %}
     
     <table>
         {{form.as_table}}
         <td>
             <!-- Add Cancel Button -->
-            <form action="{% url 'show_profile' profile.pk %}" method="GET">
+            <form action="{% url 'show_profile' status_message.profile.pk %}" method="GET">
                 <input type='submit' name = 'cancel' value= 'Cancel'>
             </form>
         </td>

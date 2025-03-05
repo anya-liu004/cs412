@@ -20,7 +20,7 @@
             <a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
         </h3>
     </profile>
-
+</main>
     <div>
         <h2>Status Messages</h2>
         <h3>
@@ -38,11 +38,14 @@
                 {% for status_image in status.get_images %}
                 <img src='{{status_image.image.image_file.url}}' alt='Image' width="150" height=auto>
                 {% endfor %}
+                <!-- link to update or delete this status message -->
+                <p>
+                    <a href="{% url 'update_status' status.pk %}">Update</a>
+                    <a href="{% url 'delete_status' status.pk %}">Delete</a>
+                </p>
             </div>
         </article>
         {% endfor %}
-
     </div>
 
-</main>
 {% endblock %}
