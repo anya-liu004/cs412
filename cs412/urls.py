@@ -26,4 +26,7 @@ urlpatterns = [
     path('restaurant/', include('restaurant.urls')),    # Assignment 4
     path('blog/', include('blog.urls')),                # Class Example
     path('mini_fb/', include('mini_fb.urls')),          # Assignment 5
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] 
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

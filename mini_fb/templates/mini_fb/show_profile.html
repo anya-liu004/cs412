@@ -25,12 +25,16 @@
         </h3>
     
         <!-- Display status messages about this article -->
-        {% for message in profile.get_status_messages %}
+        {% for status in profile.get_status_messages %}
         <article>
             <div>
-            <strong>{{message.timestamp}}</strong>
-            <p>
-            {{message.message}}
+                <strong>{{status.timestamp}}</strong>
+                <p>
+                {{status.message}}
+                </p>
+                {% for status_image in status.get_images %}
+                <img src='{{status_image.image.image_file.url}}' alt='Image'>
+                {% endfor %}
             </div>
         </article>
         {% endfor %}

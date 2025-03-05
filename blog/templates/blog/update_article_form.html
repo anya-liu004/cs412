@@ -1,0 +1,27 @@
+<!-- blog/templates/blog/update_article_form.html -->
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h2>Update an Article for the Blog</h2>
+
+<form action="{% url 'update_article' article.pk %}"  method ="POST" 
+    enctype="multipart/form-data">
+<!-- talk about CSRF -->
+{% csrf_token %}
+
+<!-- customized table version here -->
+
+{% csrf_token %}
+    
+    <table>
+    {{form.as_table}}
+    </table>
+
+    <input type='submit' name = 'update_article' value= 'Update Article!'>
+</form>
+<!-- Add Cancel Button -->
+<form action="{% url 'article' article.pk %}" method="GET">
+    <input type='submit' name = 'cancel' value= 'Cancel'>
+</form>
+
+{% endblock %}
