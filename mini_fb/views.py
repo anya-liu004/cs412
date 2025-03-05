@@ -5,10 +5,8 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 from django.urls import reverse
-from .models import Profile
+from .models import Profile, Image, StatusImage
 from .forms import CreateProfileForm, CreateStatusMessageForm
-
-# Views for the mini_fb app
 
 ### Profile
 class ShowAllProfilesView(ListView):
@@ -60,7 +58,6 @@ class CreateStatusMessageView(CreateView):
         We need to add the foreign key (of the Profile) to the Status Message
         object before saving it to the database.
         '''
-        
 		# instrument our code to display form fields: 
         print(f"CreateStatusMessageView.form_valid: form.cleaned_data={form.cleaned_data}")
         
@@ -69,6 +66,19 @@ class CreateStatusMessageView(CreateView):
         profile = Profile.objects.get(pk=pk)
         # attach this profile to the status message
         form.instance.profile = profile # set the FK
+        # save the status message to database
+        sm = form.save()
+
+        # Process uploaded files
+        files = self.request.FILES.getlist('files') # read the file from the form
+        for file in files:
+            # Create and save the Image object
+            image = Image(profile=profile, image_file=file)
+            image.save()
+
+            # Link Image to StatusMessage
+            status_image = StatusImage(status_message=sm, image=image)
+            status_image.save()
 
         # delegate the work to the superclass method form_valid:
         return super().form_valid(form)
