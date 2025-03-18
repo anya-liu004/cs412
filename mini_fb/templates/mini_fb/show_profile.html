@@ -21,31 +21,51 @@
         </h3>
     </profile>
 </main>
-    <div>
-        <h2>Status Messages</h2>
-        <h3>
-            <a href="{% url 'create_status' profile.pk %}">Create a Status Message</a>
-        </h3>
-    
-        <!-- Display status messages about this article -->
-        {% for status in profile.get_status_messages %}
-        <article>
-            <div>
-                <strong>{{status.timestamp}}</strong>
-                <p>
-                {{status.message}}
-                </p>
-                {% for status_image in status.get_images %}
-                <img src='{{status_image.image.image_file.url}}' alt='Image' width="150" height=auto>
-                {% endfor %}
-                <!-- link to update or delete this status message -->
-                <p>
-                    <a href="{% url 'update_status' status.pk %}">Update</a>
-                    <a href="{% url 'delete_status' status.pk %}">Delete</a>
-                </p>
-            </div>
-        </article>
+<!-- DISPLAY FRIENDS -->
+<div>
+    <h2>{{ profile.first_name }} {{ profile.last_name }}'s Friends</h2>
+    <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+        {% for friend in profile.get_friends %}
+        <div style="text-align: center;">
+            <a href="{% url 'show_profile' friend.pk %}" style="text-decoration: none; color: inherit;">
+                {% if friend.image_url %}
+                <img src="{{ friend.image_url }}" alt="{{ friend.first_name }}" style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;">
+                {% else %}
+                <img src="default-profile.png" alt="No Image" style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;">
+                {% endif %}
+                <p>{{ friend.first_name }} {{ friend.last_name }}</p>
+            </a>
+        </div>
+        {% empty %}
+        <p>No friends yet.</p>
         {% endfor %}
     </div>
+</div>
+<!-- DISPLAY STATUS MESSAGES -->
+<div>
+    <h2>{{ profile.first_name }} {{ profile.last_name }}'s Status Messages</h2>
+    <h3>
+        <a href="{% url 'create_status' profile.pk %}">Create a Status Message</a>
+    </h3>
 
+    <!-- Display status messages about this article -->
+    {% for status in profile.get_status_messages %}
+    <article>
+        <div>
+            <strong>{{status.timestamp}}</strong>
+            <p>
+            {{status.message}}
+            </p>
+            {% for status_image in status.get_images %}
+            <img src='{{status_image.image.image_file.url}}' alt='Image' width="150" height=auto>
+            {% endfor %}
+            <!-- link to update or delete this status message -->
+            <p>
+                <a href="{% url 'update_status' status.pk %}">Update</a>
+                <a href="{% url 'delete_status' status.pk %}">Delete</a>
+            </p>
+        </div>
+    </article>
+    {% endfor %}
+</div>
 {% endblock %}

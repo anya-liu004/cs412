@@ -28,11 +28,17 @@ class Profile(models.Model):
         messages = StatusMessage.objects.filter(profile=self)
         return messages
     
+    def get_friends(self): 
+        '''Return a list of Profile objects that are friends with this profile.'''
+        friends1 = Profile.objects.filter(pk__in=Friend.objects.filter(profile1=self).values_list("profile2", flat=True))
+        friends2 = Profile.objects.filter(pk__in=Friend.objects.filter(profile2=self).values_list("profile1", flat=True))
+        
+        return friends1.union(friends2)
+
 class StatusMessage(models.Model):
     '''Encapsulate the idea of a Status Message on a Profile.'''
 	# data attributes of a Status Message:
     profile = models.ForeignKey("Profile", on_delete=models.CASCADE) # foreign key because it refers to a different kind of model
-    # author = models.TextField(blank=False)
     message = models.TextField(blank=False) # the text of the status message
     timestamp = models.DateTimeField(auto_now=True) # the time at which this status message was created/saved
     
@@ -65,3 +71,14 @@ class StatusImage(models.Model):
     def __str__(self):
         '''Return a string representation of this StatusImage object.'''
         return f'Image associated with StatusMessage {self.status_message.id}'
+
+class Friend(models.Model):
+    '''Encapsulate the idea of Friend, an edge connecting two nodes within the social network.'''
+
+    profile1 = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name="profile1")
+    profile2 = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name="profile2")
+    timestamp = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        '''Return a string representation of this Friend object.'''
+        return f'{self.profile1.first_name} {self.profile1.last_name} and {self.profile2.first_name} {self.profile2.last_name}'
