@@ -2,8 +2,8 @@
 # Email: anyaliu@bu.edu
 # This is the views.py file for the mini facebook app and defines the views for the mini_fb app.
 
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from django.urls import reverse
 from .models import Profile, StatusMessage, Image, StatusImage
 from .forms import CreateProfileForm, CreateStatusMessageForm, UpdateProfileForm, UpdateStatusMessageForm
@@ -160,3 +160,24 @@ class DeleteStatusMessageView(DeleteView):
         # reverse to show the profile page
         return reverse('show_profile', kwargs={'pk':profile.pk})
 
+### Add Friend
+class AddFriendView(View):
+    '''A view to add a friend relationship between two Profiles.'''
+    def dispatch(self, request, *args, **kwargs):
+        # Get the Profile instances
+        pk = self.kwargs.get('pk')
+        other_pk = self.kwargs.get('other_pk')
+        profile = Profile.objects.get(pk=pk)
+        other_profile = Profile.objects.get(pk=other_pk)
+
+        # Call add_friend method
+        profile.add_friend(other_profile)
+
+        # Redirect back to the profile page
+        return redirect('show_profile', pk=profile.pk)
+    
+class ShowFriendSuggestionsView(DetailView):
+    '''Show the friend suggestions for one profile.'''
+    model = Profile
+    template_name = 'mini_fb/friend_suggestions.html'
+    context_object_name = 'profile'

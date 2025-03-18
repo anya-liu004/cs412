@@ -23,17 +23,34 @@ class Profile(models.Model):
         '''Return the URL to display one instance of this model.'''
         return reverse('show_profile', kwargs={'pk': self.pk})
     
+    # Status Message
     def get_status_messages(self):
         '''Return all of the status messages about this profile.'''
         messages = StatusMessage.objects.filter(profile=self)
         return messages
     
+    # Friend
     def get_friends(self): 
         '''Return a list of Profile objects that are friends with this profile.'''
         friends1 = Profile.objects.filter(pk__in=Friend.objects.filter(profile1=self).values_list("profile2", flat=True))
         friends2 = Profile.objects.filter(pk__in=Friend.objects.filter(profile2=self).values_list("profile1", flat=True))
-        
         return friends1.union(friends2)
+    
+    def add_friend(self, other): 
+        '''Create a Friend connection between this profile and another profile.'''
+        if self == other:
+            return  # Prevent self-friending
+        # Check if a Friend relationship already exists
+        existing_friendship1 = Friend.objects.filter(profile1=self, profile2=other).exists()
+        existing_friendship2 = Friend.objects.filter(profile1=other, profile2=self).exists()
+        if not (existing_friendship1 or existing_friendship2):
+            Friend.objects.create(profile1=self, profile2=other)
+    
+    def get_friend_suggestions(self):
+        '''Return a list of Profile objects that are not already friends with this profile.'''
+        existing_friends = self.get_friends()
+        friends = Profile.objects.exclude(pk=self.pk).exclude(pk__in=existing_friends.values_list("pk", flat=True))
+        return friends
 
 class StatusMessage(models.Model):
     '''Encapsulate the idea of a Status Message on a Profile.'''

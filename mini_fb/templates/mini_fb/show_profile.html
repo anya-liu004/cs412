@@ -29,9 +29,9 @@
         <div style="text-align: center;">
             <a href="{% url 'show_profile' friend.pk %}" style="text-decoration: none; color: inherit;">
                 {% if friend.image_url %}
-                <img src="{{ friend.image_url }}" alt="{{ friend.first_name }}" style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;">
+                <img src="{{ friend.image_url }}" alt="{{ friend.first_name }}" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
                 {% else %}
-                <img src="default-profile.png" alt="No Image" style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;">
+                    No Image.
                 {% endif %}
                 <p>{{ friend.first_name }} {{ friend.last_name }}</p>
             </a>
@@ -40,6 +40,9 @@
         <p>No friends yet.</p>
         {% endfor %}
     </div>
+    <h3>
+        <a href="{% url 'friend_suggestions' profile.pk %}">Friend Suggestions</a>
+    </h3>
 </div>
 <!-- DISPLAY STATUS MESSAGES -->
 <div>
