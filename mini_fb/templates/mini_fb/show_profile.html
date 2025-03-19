@@ -19,8 +19,12 @@
         <h3>
             <a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
         </h3>
+        <h3>
+            <a href="{% url 'news_feed' profile.pk %}">News Feed</a>
+        </h3>
     </profile>
 </main>
+
 <!-- DISPLAY FRIENDS -->
 <div>
     <h2>{{ profile.first_name }} {{ profile.last_name }}'s Friends</h2>
@@ -60,7 +64,7 @@
             {{status.message}}
             </p>
             {% for status_image in status.get_images %}
-            <img src='{{status_image.image.image_file.url}}' alt='Image' width="150" height=auto>
+            <img src='{{status_image.image.image_file.url}}' alt='Image' width="150" height=auto style="border-radius: 8px">
             {% endfor %}
             <!-- link to update or delete this status message -->
             <p>

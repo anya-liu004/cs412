@@ -160,7 +160,7 @@ class DeleteStatusMessageView(DeleteView):
         # reverse to show the profile page
         return reverse('show_profile', kwargs={'pk':profile.pk})
 
-### Add Friend
+### Friends
 class AddFriendView(View):
     '''A view to add a friend relationship between two Profiles.'''
     def dispatch(self, request, *args, **kwargs):
@@ -180,4 +180,11 @@ class ShowFriendSuggestionsView(DetailView):
     '''Show the friend suggestions for one profile.'''
     model = Profile
     template_name = 'mini_fb/friend_suggestions.html'
+    context_object_name = 'profile'
+
+# News Feed
+class ShowNewsFeedView(DetailView): 
+    '''Show the news feed for one profile.'''
+    model = Profile
+    template_name = 'mini_fb/news_feed.html'
     context_object_name = 'profile'

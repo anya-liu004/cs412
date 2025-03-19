@@ -1,0 +1,50 @@
+<!-- Author: Anya Liu -->
+<!-- Email: anyaliu@bu.edu -->
+<!-- This is the template that inherits from base.html to display the news feed for a single Profile -->
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<h3>
+    <a href="{% url 'show_profile' profile.pk %}">Back to {{ profile.first_name }} {{ profile.last_name }}'s Page</a>
+</h3>
+<h2>{{ profile.first_name }} {{ profile.last_name }}'s News Feed:</h2>
+
+<!-- Display status messages about this article -->
+{% for status in profile.get_news_feed %}
+    <div style="border-bottom: 1px solid #ccc; padding: 15px; margin-bottom: 15px; max-width: 600px;">
+        <!-- Top section: Profile picture, Name, and Timestamp -->
+        <div style="display: flex; align-items: center;">
+            <!-- Profile Picture -->
+            {% if status.profile.image_url %}
+                <img src="{{ status.profile.image_url }}" alt="Profile Picture" 
+                    style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+            {% endif %}
+
+            <!-- Name and Timestamp -->
+            <div>
+                <p style="margin: 0; font-weight: bold;">
+                    {{ status.profile.first_name }} {{ status.profile.last_name }}
+                </p>
+                <p style="margin: 0; color: gray; font-size: 14px;">
+                    {{ status.timestamp }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Status Message -->
+        <p style="margin-top: 10px; font-size: 16px;">{{ status.message }}</p>
+
+        <!-- Status Images -->
+        {% for status_image in status.get_images %}
+            <img src="{{ status_image.image.image_file.url }}" alt="Image" 
+                style="width: 150; height: auto; border-radius: 8px; margin-top: 10px;">
+        {% endfor %}
+    </div>
+{% empty %}
+    <p>No status messages yet.</p>
+{% endfor %}
+
+
+
+
+{% endblock %}

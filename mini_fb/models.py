@@ -29,7 +29,7 @@ class Profile(models.Model):
         messages = StatusMessage.objects.filter(profile=self)
         return messages
     
-    # Friend
+    # Friends
     def get_friends(self): 
         '''Return a list of Profile objects that are friends with this profile.'''
         friends1 = Profile.objects.filter(pk__in=Friend.objects.filter(profile1=self).values_list("profile2", flat=True))
@@ -51,6 +51,14 @@ class Profile(models.Model):
         existing_friends = self.get_friends()
         friends = Profile.objects.exclude(pk=self.pk).exclude(pk__in=existing_friends.values_list("pk", flat=True))
         return friends
+    
+    def get_news_feed(self): 
+        '''Return a list of StatusMessage objects from this profile and all friends, ordered by timestamp (most recent first).'''
+        friends = self.get_friends()  # Get all friends (QuerySet)
+        # Get the primary keys of self and all friends
+        all_profile_pks = list(friends.values_list("pk", flat=True)) + [self.pk]
+        # Filter status messages using profile__in
+        return StatusMessage.objects.filter(profile__pk__in=all_profile_pks).order_by('-timestamp')
 
 class StatusMessage(models.Model):
     '''Encapsulate the idea of a Status Message on a Profile.'''
