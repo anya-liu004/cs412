@@ -11,7 +11,6 @@ from .forms import CreateProfileForm, CreateStatusMessageForm, UpdateProfileForm
 ### Profile
 class ShowAllProfilesView(ListView):
     '''Create a subclass of ListView to display all Facebook Profiles.'''
-
     model = Profile # retrieve objects of type Profile from the database
     template_name = 'mini_fb/show_all_profiles.html'
     context_object_name = 'profiles' # how to find the data in the template file
@@ -22,6 +21,8 @@ class ShowProfilePageView(DetailView):
     template_name = 'mini_fb/show_profile.html'
     context_object_name = 'profile'
 
+### CREATE VIEWS
+# Create Profile
 class CreateProfileView(CreateView): 
     '''A view to handle creation of a new Profile.
     (1) display the HTML form to user (GET)
@@ -30,23 +31,7 @@ class CreateProfileView(CreateView):
     form_class = CreateProfileForm
     template_name = "mini_fb/create_profile_form.html"
 
-# Update Profile 
-class UpdateProfileView(UpdateView):
-    '''A view to update an Article and save it to the database.'''
-
-    model = Profile
-    form_class = UpdateProfileForm
-    template_name = "mini_fb/update_profile_form.html"
-    
-    def form_valid(self, form):
-        '''
-        Handle the form submission to create a new Profile object.
-        '''
-        print(f'UpdateProfileView: form.cleaned_data={form.cleaned_data}')
-
-        return super().form_valid(form)
-
-### Status Message
+# Create Status Message
 class CreateStatusMessageView(CreateView):
     '''A view to create a new status message and save it to the database.'''
     form_class = CreateStatusMessageForm
@@ -54,13 +39,10 @@ class CreateStatusMessageView(CreateView):
 
     def get_context_data(self):
         '''Return the dictionary of context variables for use in the template.'''
-
         # calling the superclass method
         context = super().get_context_data()
-
         # find/add the profile to the context data
-        # retrieve the PK from the URL pattern
-        pk = self.kwargs['pk']
+        pk = self.kwargs['pk'] # retrieve the PK from the URL pattern
         profile = Profile.objects.get(pk=pk)
 
         # add this profile into the context dictionary:
@@ -73,16 +55,10 @@ class CreateStatusMessageView(CreateView):
         We need to add the foreign key (of the Profile) to the Status Message
         object before saving it to the database.
         '''
-		# instrument our code to display form fields: 
-        print(f"CreateStatusMessageView.form_valid: form.cleaned_data={form.cleaned_data}")
-        
-        # retrieve the PK from the URL pattern
-        pk = self.kwargs['pk']
+        pk = self.kwargs['pk'] # retrieve the PK from the URL pattern
         profile = Profile.objects.get(pk=pk)
-        # attach this profile to the status message
-        form.instance.profile = profile # set the FK
-        # save the status message to database
-        sm = form.save()
+        form.instance.profile = profile # attach this profile to the status message
+        sm = form.save() # save the status message to database
 
         # Process uploaded files
         files = self.request.FILES.getlist('files') # read the file from the form
@@ -101,18 +77,30 @@ class CreateStatusMessageView(CreateView):
     ## show how the reverse function uses the urls.py to find the URL pattern
     def get_success_url(self):
         '''Provide a URL to redirect to after creating a new Status Message.'''
-
-        # create and return a URL:
-        # return reverse('show_all') # not ideal; we will return to this
         # retrieve the PK from the URL pattern
         pk = self.kwargs['pk']
         # call reverse to generate the URL for this Article
         return reverse('show_profile', kwargs={'pk':pk})
 
+### UPDATE VIEWS
+# Update Profile 
+class UpdateProfileView(UpdateView):
+    '''A view to update an Article and save it to the database.'''
+    model = Profile
+    form_class = UpdateProfileForm
+    template_name = "mini_fb/update_profile_form.html"
+
+    def form_valid(self, form):
+        '''
+        Handle the form submission to create a new Profile object.
+        '''
+        print(f'UpdateProfileView: form.cleaned_data={form.cleaned_data}')
+
+        return super().form_valid(form)
+
 # Update Status Message 
 class UpdateStatusMessageView(UpdateView):
     '''A view to update a Status message and save it to the database.'''
-
     model = StatusMessage
     form_class = UpdateStatusMessageForm
     template_name = "mini_fb/update_status_form.html"
@@ -138,20 +126,18 @@ class UpdateStatusMessageView(UpdateView):
         
         # reverse to show the profile page
         return reverse('show_profile', kwargs={'pk':profile.pk})
-    
+
+### DELETE VIEWS
 # Delete Status Message
 class DeleteStatusMessageView(DeleteView):
     '''A view to delete a status message and remove it from the database.'''
-
     template_name = "mini_fb/delete_status_form.html"
     model = StatusMessage
     context_object_name = 'status_message'
 
     def get_success_url(self):
         '''Return a the URL to which we should be directed after the delete.'''
-
-        # get the pk for this status message
-        pk = self.kwargs.get('pk')
+        pk = self.kwargs.get('pk') # get the pk for this status message
         status_message = StatusMessage.objects.get(pk=pk)
         
         # find the profile to which this StatusMessage is related by FK
@@ -163,6 +149,7 @@ class DeleteStatusMessageView(DeleteView):
 ### Friends
 class AddFriendView(View):
     '''A view to add a friend relationship between two Profiles.'''
+    
     def dispatch(self, request, *args, **kwargs):
         # Get the Profile instances
         pk = self.kwargs.get('pk')
@@ -182,7 +169,7 @@ class ShowFriendSuggestionsView(DetailView):
     template_name = 'mini_fb/friend_suggestions.html'
     context_object_name = 'profile'
 
-# News Feed
+### News Feed
 class ShowNewsFeedView(DetailView): 
     '''Show the news feed for one profile.'''
     model = Profile

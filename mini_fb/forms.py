@@ -22,7 +22,6 @@ class CreateStatusMessageForm(forms.ModelForm):
 
 class UpdateProfileForm(forms.ModelForm):
     '''A form to update a Profile in the database.'''
-
     class Meta:
         '''associate this form with the Profile model.'''
         model = Profile
@@ -30,7 +29,6 @@ class UpdateProfileForm(forms.ModelForm):
 
 class UpdateStatusMessageForm(forms.ModelForm):
     '''A form to update a Status Message in the database.'''
-
     class Meta:
         '''associate this form with the StatusMessage model.'''
         model = StatusMessage
