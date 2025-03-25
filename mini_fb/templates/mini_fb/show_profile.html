@@ -16,12 +16,14 @@
         
         <p>City: {{ profile.city }}</p>
         <p>Email: {{ profile.email_address }}</p>
+        {% if request.user.is_authenticated and request.user == profile.user %}
         <h3>
             <a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
         </h3>
         <h3>
             <a href="{% url 'news_feed' profile.pk %}">News Feed</a>
         </h3>
+        {% endif %}
     </profile>
 </main>
 
@@ -44,16 +46,20 @@
         <p>No friends yet.</p>
         {% endfor %}
     </div>
+    {% if request.user.is_authenticated and request.user == profile.user %}
     <h3>
         <a href="{% url 'friend_suggestions' profile.pk %}">Friend Suggestions</a>
     </h3>
+    {% endif %}
 </div>
 <!-- DISPLAY STATUS MESSAGES -->
 <div>
     <h2>{{ profile.first_name }} {{ profile.last_name }}'s Status Messages</h2>
+    {% if request.user.is_authenticated and request.user == profile.user %}
     <h3>
         <a href="{% url 'create_status' profile.pk %}">Create a Status Message</a>
     </h3>
+    {% endif %}
 
     <!-- Display status messages about this article -->
     {% for status in profile.get_status_messages %}
@@ -67,10 +73,12 @@
             <img src='{{status_image.image.image_file.url}}' alt='Image' width="150" height=auto style="border-radius: 8px">
             {% endfor %}
             <!-- link to update or delete this status message -->
+            {% if request.user.is_authenticated and request.user == profile.user %}
             <p>
                 <a href="{% url 'update_status' status.pk %}">Update</a>
                 <a href="{% url 'delete_status' status.pk %}">Delete</a>
             </p>
+            {% endif %}
         </div>
     </article>
     {% endfor %}

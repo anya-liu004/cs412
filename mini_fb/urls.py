@@ -4,6 +4,7 @@
 
 from django.urls import path
 from .views import * # our view class definition 
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     # map the URL (empty string) to the view

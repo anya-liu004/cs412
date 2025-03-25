@@ -17,6 +17,12 @@
                     <li><a href="{% url 'create_profile' %}">Create Profile</a></li>
                 </ul>
             </nav>
+            <!-- show who's logged in -->
+            {% if request.user.is_authenticated %}
+            <p>Logged in user: {{ request.user }}.</p>
+            {% else %}
+            <p>Not logged in.</p>
+            {% endif %}
         </header>
     
     {% block content %}

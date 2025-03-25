@@ -13,8 +13,28 @@
                 <ul>
                     <li><a href="{% url 'show_all' %}">Show All</a></li>
                     <li><a href="{% url 'random' %}">Random</a></li>
-                    <li><a href="{% url 'create_article' %}">Create</a></li>
+
+                    <!-- Add: URLs for authentication -->
+                    {% if request.user.is_authenticated %} 
+                    <li><a href="{% url 'create_article' %}">Create</a></li>              
+                    <li>
+                        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="border:none; background:none; color:blue; cursor:pointer;">Log out</button>
+                        </form>
+                    </li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}">Log in</a></li>
+                    {% endif %}
                 </ul>
+                <hr>
+
+                <!-- show who's logged in -->
+                {% if request.user.is_authenticated %}
+                Logged in user: {{ request.user }}.
+                {% else %}
+                Not logged in.
+                {% endif %}
             </nav>
         </header>
     <!-- substitute in the specific content here -->
