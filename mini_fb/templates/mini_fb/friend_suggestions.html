@@ -13,7 +13,7 @@
     {% for friend in profile.get_friend_suggestions %}
     <div style="text-align: center;">
         <h4>
-            <a href="{% url 'add_friend' profile.pk friend.pk %}">Add Friend</a>
+            <a href="{% url 'add_friend' friend.pk %}">Add Friend</a>
         </h4>
         {% if friend.image_url %}
             <img src="{{ friend.image_url }}" alt="{{ friend.first_name }}" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">

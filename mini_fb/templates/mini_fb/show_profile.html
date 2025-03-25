@@ -18,10 +18,10 @@
         <p>Email: {{ profile.email_address }}</p>
         {% if request.user.is_authenticated and request.user == profile.user %}
         <h3>
-            <a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
+            <a href="{% url 'update_profile' %}">Update Profile</a>
         </h3>
         <h3>
-            <a href="{% url 'news_feed' profile.pk %}">News Feed</a>
+            <a href="{% url 'news_feed' %}">News Feed</a>
         </h3>
         {% endif %}
     </profile>
@@ -48,7 +48,7 @@
     </div>
     {% if request.user.is_authenticated and request.user == profile.user %}
     <h3>
-        <a href="{% url 'friend_suggestions' profile.pk %}">Friend Suggestions</a>
+        <a href="{% url 'friend_suggestions' %}">Friend Suggestions</a>
     </h3>
     {% endif %}
 </div>
@@ -57,7 +57,7 @@
     <h2>{{ profile.first_name }} {{ profile.last_name }}'s Status Messages</h2>
     {% if request.user.is_authenticated and request.user == profile.user %}
     <h3>
-        <a href="{% url 'create_status' profile.pk %}">Create a Status Message</a>
+        <a href="{% url 'create_status' %}">Create a Status Message</a>
     </h3>
     {% endif %}
 

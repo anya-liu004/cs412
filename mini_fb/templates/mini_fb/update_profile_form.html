@@ -6,7 +6,7 @@
 {% block content %}
 <h2>Update a Profile</h2>
 
-<form action="{% url 'update_profile' profile.pk %}"  method ="POST" 
+<form action="{% url 'update_profile' %}"  method ="POST" 
     enctype="multipart/form-data">
     {% csrf_token %}
     
