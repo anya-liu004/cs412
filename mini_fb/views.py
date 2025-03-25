@@ -8,6 +8,9 @@ from django.urls import reverse
 from .models import *
 from .forms import *
 from django.contrib.auth.mixins import LoginRequiredMixin ## NEW
+from django.contrib.auth.forms import UserCreationForm ## NEW
+from django.contrib.auth.models import User ## NEW
+from django.contrib.auth import login # NEW
 
 ### Profile
 class ShowAllProfilesView(ListView):
@@ -32,16 +35,28 @@ class CreateProfileView(CreateView):
     form_class = CreateProfileForm
     template_name = "mini_fb/create_profile_form.html"
 
+    def get_context_data(self, **kwargs):
+        '''Return the dictionary of context variables for use in the template.'''
+        context = super().get_context_data(**kwargs)
+        # add UserCreationForm to context
+        context['user_creation_form'] = UserCreationForm()
+        return context
+
     def form_valid(self, form):
         '''
         Handle the form submission to create a new Profile object.
         '''
-        # find the logged in user
-        user = self.request.user
-        # attach user to form instance (Profile object):
-        form.instance.user = user
-		# delegate work to the superclass version of this method
-        return super().form_valid(form)
+        user_form = UserCreationForm(self.request.POST)
+        
+        if user_form.is_valid():
+            user = user_form.save()  # Save the new user
+            login(self.request, user)  # Log in the newly created user
+            form.instance.user = user  # Attach user to profile instance
+            return super().form_valid(form)  # Save profile and redirect
+        else:
+            print("UserCreationForm errors:", user_form.errors)
+            # If UserCreationForm is invalid, re-render the template with errors
+            return self.render_to_response(self.get_context_data(form=form, user_creation_form=user_form))
 
 # Create Status Message
 class CreateStatusMessageView(LoginRequiredMixin, CreateView):
