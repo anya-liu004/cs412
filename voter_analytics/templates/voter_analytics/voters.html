@@ -1,3 +1,6 @@
+<!-- Author: Anya Liu -->
+<!-- Email: anyaliu@bu.edu -->
+<!-- This is the template to display all the voters (additional filtering)-->
 <!-- templates/voters_analytics/results.html -->
 {% extends 'voter_analytics/base.html' %}
 <h1>Showing all Voters</h1>
@@ -14,7 +17,7 @@
         <ul class="pagination">
             {% if page_obj.has_previous %}
                 <li>
-                    <span><a href="?page={{ page_obj.previous_page_number }}">Previous</a></span>
+                    <span><a href="?{{ query_string }}&page={{ page_obj.previous_page_number }}">Previous</a></span>
                 </li>
             {% endif %}
                 <li class="">
@@ -22,7 +25,7 @@
                 </li>
             {% if page_obj.has_next %}
                 <li>
-                    <span><a href="?page={{ page_obj.next_page_number }}">Next</a></span>
+                    <span><a href="?{{ query_string }}&page={{ page_obj.next_page_number }}">Next</a></span>
                 </li>
             {% endif %}
             </ul>

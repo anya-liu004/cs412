@@ -1,8 +1,11 @@
+<!-- Author: Anya Liu -->
+<!-- Email: anyaliu@bu.edu -->
+<!-- This is the template to display a detailed view of a single voter -->
 {% extends 'voter_analytics/base.html' %}
 
 {% block content %}
 <div class="container">
-    <h1>Showing Information for {{v.first_name}} {{v.last_name}}</h1>
+    <h1>Voter Detail</h1>
     <table>
         <tr>
             <th>Name</th>
@@ -17,7 +20,7 @@
 
         <tr>
             <td>{{v.first_name}} {{v.last_name}}</td>
-            <td>{{v.address_street_number}} {{v.address_street_name}} {{v.address_apartment_number}} </td>
+            <td>{{v.address_street_number}} {{v.address_street_name}}, Apartment {{v.address_apartment_number}}, Newton, Ma</td>
             <td>{{v.address_zip_code}}</td>
             <td>{{v.date_of_birth}}</td>
             <td>{{v.date_of_registration}}</td>

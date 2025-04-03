@@ -1,4 +1,7 @@
-<!-- marathon_analytics/templates/marathon_analytics/base.html -->
+<!-- Author: Anya Liu -->
+<!-- Email: anyaliu@bu.edu -->
+<!-- This is the base template to display the navigation bar -->
+<!-- voter_analytics/templates/voter_analytics/base.html -->
 {% load static %}
 <html>
     <head>
@@ -10,7 +13,8 @@
             <h1>Voter Analytics</h1>
             <nav>
                 <ul>
-                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'home' %}"><h2>Home</h2></a></li>
+                    <li><a href="{% url 'graphs' %}"><h2>Graphs</h2></a></li>
                 </ul>
 
             </nav>

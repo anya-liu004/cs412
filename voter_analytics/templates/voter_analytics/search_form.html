@@ -1,6 +1,9 @@
+<!-- Author: Anya Liu -->
+<!-- Email: anyaliu@bu.edu -->
+<!-- This is the template to display the HTML form to search voters by attributes. -->
 <h1>Search Voters</h1>
 
-<form action="{% url 'voters_list' %}" method="GET">
+<form action="{% if request.resolver_match.url_name == 'graphs' %}{% url 'graphs' %}{% else %}{% url 'voters_list' %}{% endif %}" method="GET">
     <table>
         <!-- Party Affiliation -->
         <tr>

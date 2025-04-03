@@ -1,0 +1,33 @@
+<!-- Author: Anya Liu -->
+<!-- Email: anyaliu@bu.edu -->
+<!-- This is the template to display the Graphs of voter analytics based on form input -->
+<!-- templates/voters_analytics/graphs.html -->
+{% extends 'voter_analytics/base.html' %}
+<h1>Showing Graphs</h1>
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% include "voter_analytics/search_form.html" %}    
+    </div>
+</div>    
+<!-- Show Voter Birth Year Distribution -->
+<div class="container">
+    <div class="row">
+        {{graph_div_birth|safe}} 
+    </div>
+</div>
+
+<!-- Show Voter Party Affiliation Distribution -->
+<div class="container">
+    <div class="row">
+        {{graph_div_party|safe}} 
+    </div>
+</div>
+<!-- Show Voter Participation by Election -->
+<div class="container">
+    <div class="row">
+        {{graph_div_elections|safe}} 
+    </div>
+</div>
+{% endblock %}

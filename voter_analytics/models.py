@@ -1,3 +1,7 @@
+# Author: Anya Liu
+# Email: anyaliu@bu.edu
+# This file contains the model for the Voter Analytics project.
+# It defines the Voter model and provides functions to load data from a CSV file.
 from django.db import models
 
 # Create your models here.
