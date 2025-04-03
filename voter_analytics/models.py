@@ -22,7 +22,7 @@ class Voter(models.Model):
     *    v23town
     '''
     # identification
-    id_number = models.TextField(primary_key=True)
+    id_number = models.TextField() 
     # bib = models.IntegerField()
     first_name = models.TextField()
     last_name = models.TextField()
@@ -32,7 +32,7 @@ class Voter(models.Model):
     address_zip_code = models.TextField()
     date_of_birth = models.DateField()
     date_of_registration = models.DateField()
-    party_affiliation = models.TextField()
+    party_affiliation = models.CharField(max_length=2, blank=True, null=True)
     precinct_number = models.TextField()
     
     # election participation
@@ -74,7 +74,7 @@ def load_data():
             # show which value in each field
                     
             # create a new instance of Result object with this record from CSV
-            result = Voter(id_number=fields[0],
+            result = Voter( id_number=fields[0],
                             first_name=fields[1],
                             last_name=fields[2],
 

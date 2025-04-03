@@ -1,0 +1,78 @@
+<h1>Search Voters</h1>
+
+<form action="{% url 'voters_list' %}" method="GET">
+    <table>
+        <!-- Party Affiliation -->
+        <tr>
+            <th>Party Affiliation:</th>
+            <td>
+                <select name="party_affiliation">
+                    <option value="">Any</option>
+                    {% for party in party_affiliations %}
+                        <option value="{{ party }}">{{ party }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <!-- Minimum Date of Birth -->
+        <tr>
+            <th>Min Date of Birth:</th>
+            <td>
+                <select name="min_dob">
+                    <option value="">Any</option>
+                    {% for year in years %}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <!-- Maximum Date of Birth -->
+        <tr>
+            <th>Max Date of Birth:</th>
+            <td>
+                <select name="max_dob">
+                    <option value="">Any</option>
+                    {% for year in years %}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <!-- Voter Score -->
+        <tr>
+            <th>Voter Score:</th>
+            <td>
+                <select name="voter_score">
+                    <option value="">Any</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </td>
+        </tr>
+
+        <!-- Election Participation -->
+        <tr>
+            <th>Voted in Elections:</th>
+            <td>
+                <label><input type="checkbox" name="v20state" value="1"> 2020 State Election</label><br>
+                <label><input type="checkbox" name="v21town" value="1"> 2021 Town Election</label><br>
+                <label><input type="checkbox" name="v21primary" value="1"> 2021 Primary Election</label><br>
+                <label><input type="checkbox" name="v22general" value="1"> 2022 General Election</label><br>
+                <label><input type="checkbox" name="v23town" value="1"> 2023 Town Election</label><br>
+            </td>
+        </tr>
+
+        <!-- Submit Button -->
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Search">
+            </td>
+        </tr>
+    </table>
+</form>
